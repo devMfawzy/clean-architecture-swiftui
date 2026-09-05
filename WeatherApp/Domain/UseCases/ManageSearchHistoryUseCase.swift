@@ -7,7 +7,12 @@
 
 import Foundation
 
-class ManageSearchHistoryUseCase {
+protocol ManageSearchHistoryUseCaseProtocol {
+    func getRecentSearches() async throws -> [String]
+    func addSearchTerm(_ cityName: String) async throws
+}
+
+class ManageSearchHistoryUseCase: ManageSearchHistoryUseCaseProtocol {
     private let repository: SearchHistoryRepositoryProtocol
     
     init(repository: SearchHistoryRepositoryProtocol) {

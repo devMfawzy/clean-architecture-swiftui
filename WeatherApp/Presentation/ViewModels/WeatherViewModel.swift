@@ -9,9 +9,9 @@ import Foundation
 import CoreLocation
 
 class WeatherViewModel: ObservableObject {
-    private let getWeatherUseCase: GetWeatherUseCase
-    private let searchHistoryUseCase: ManageSearchHistoryUseCase
-    private let getLocationUseCase: GetCurrentLocationUseCase
+    private let getWeatherUseCase: GetWeatherUseCaseProtocol
+    private let searchHistoryUseCase: ManageSearchHistoryUseCaseProtocol
+    private let getLocationUseCase: GetCurrentLocationUseCaseProtocol
     
     @Published var weatherUIModel: WeatherUIModel?
     @Published var isLoading = false
@@ -21,9 +21,9 @@ class WeatherViewModel: ObservableObject {
     @Published var showLocationPermissionInfo = false
     
     init(
-        getWeatherUseCase: GetWeatherUseCase,
-        getLocationUseCase: GetCurrentLocationUseCase,
-        searchHistoryUseCase: ManageSearchHistoryUseCase
+        getWeatherUseCase: GetWeatherUseCaseProtocol,
+        getLocationUseCase: GetCurrentLocationUseCaseProtocol,
+        searchHistoryUseCase: ManageSearchHistoryUseCaseProtocol
     ) {
         self.getWeatherUseCase = getWeatherUseCase
         self.getLocationUseCase = getLocationUseCase

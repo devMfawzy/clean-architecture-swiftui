@@ -7,7 +7,12 @@
 
 import Foundation
 
-class GetWeatherUseCase {
+protocol GetWeatherUseCaseProtocol {
+    func execute(forCity cityName: String, forceFresh: Bool) async throws -> Weather
+    func execute(latitude: Double, longitude: Double) async throws -> Weather
+}
+
+class GetWeatherUseCase: GetWeatherUseCaseProtocol {
     private let repository: WeatherRepositoryProtocol
     
     init(repository: WeatherRepositoryProtocol) {

@@ -8,41 +8,41 @@
 import Foundation
 @testable import WeatherApp
 
-class MockGetWeatherUseCase: GetWeatherUseCase {
+class MockGetWeatherUseCase: GetWeatherUseCaseProtocol {
     var mockWeather: Weather?
     var shouldThrowError = false
     var errorToThrow: Error = NSError(domain: "test", code: 0)
-    
+
     var executeForCityCalled = false
     var executeForLocationCalled = false
     var lastForceFresh = false
-    
-    override func execute(forCity cityName: String, forceFresh: Bool = false) async throws -> Weather {
+
+    func execute(forCity cityName: String, forceFresh: Bool = false) async throws -> Weather {
         executeForCityCalled = true
         lastForceFresh = forceFresh
-        
+
         if shouldThrowError {
             throw errorToThrow
         }
-        
+
         guard let weather = mockWeather else {
             throw NSError(domain: "test", code: 0, userInfo: [NSLocalizedDescriptionKey: "No mock weather"])
         }
-        
+
         return weather
     }
-    
-    override func execute(latitude: Double, longitude: Double) async throws -> Weather {
+
+    func execute(latitude: Double, longitude: Double) async throws -> Weather {
         executeForLocationCalled = true
-        
+
         if shouldThrowError {
             throw errorToThrow
         }
-        
+
         guard let weather = mockWeather else {
             throw NSError(domain: "test", code: 0, userInfo: [NSLocalizedDescriptionKey: "No mock weather"])
         }
-        
+
         return weather
     }
 }

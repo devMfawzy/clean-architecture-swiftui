@@ -7,7 +7,12 @@
 
 import Foundation
 
-class GetCurrentLocationUseCase {
+protocol GetCurrentLocationUseCaseProtocol: AnyObject {
+    func startMonitoring(delegate: LocationUpdateDelegate)
+    func stopMonitoring()
+}
+
+class GetCurrentLocationUseCase: GetCurrentLocationUseCaseProtocol {
     private let locationService: LocationServiceProtocol
     private var locationUpdateDelegate: LocationUpdateDelegate?
     

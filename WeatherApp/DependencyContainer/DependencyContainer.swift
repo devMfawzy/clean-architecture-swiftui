@@ -27,13 +27,13 @@ class DependencyContainer {
     
     
     // Use Cases
-    lazy var getWeatherUseCase = GetWeatherUseCase(
+    lazy var getWeatherUseCase: GetWeatherUseCaseProtocol = GetWeatherUseCase(
         repository: weatherRepository
     )
-    lazy var manageSearchHistoryUseCase = ManageSearchHistoryUseCase(
+    lazy var manageSearchHistoryUseCase: ManageSearchHistoryUseCaseProtocol = ManageSearchHistoryUseCase(
         repository: searchHistoryRepository
     )
-    lazy var getCurrentLocationUseCase = GetCurrentLocationUseCase(
+    lazy var getCurrentLocationUseCase: GetCurrentLocationUseCaseProtocol = GetCurrentLocationUseCase(
         locationService: locationService
     )
     
