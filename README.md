@@ -63,22 +63,39 @@ WeatherApp/
         └── WeatherUIModel.swift
 ```
 
-### Installation
+## Getting Started
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/devMfawzy/WeatherApp.git
-    ```
-2. Open the project in Xcode:
-    ```sh
-    cd WeatherApp
-    open WeatherApp.xcodeproj
-    ```
+### 1. Clone and open
 
-### Running the App
+```sh
+git clone https://github.com/devMfawzy/WeatherApp.git
+cd WeatherApp
+open WeatherApp.xcodeproj
+```
 
-1. Build and run the project in Xcode.
-2. The app should launch in the iOS Simulator or on a physical device.
+### 2. Add an API key
+
+Weather data comes from [OpenWeatherMap](https://openweathermap.org/api), which
+needs a free API key. Sign up, copy your key from the API keys tab, then:
+
+```sh
+cp Secrets.example.plist WeatherApp/Secrets.plist
+```
+
+Open `WeatherApp/Secrets.plist` and paste the key into `WeatherAPIKey`.
+
+`Secrets.plist` is listed in `.gitignore`, so your key stays out of version
+control. Note that a key shipped inside any mobile app can be extracted from the
+build — this keeps it off GitHub, which is a different thing from keeping it
+secret. A production app would proxy the request through a backend.
+
+New keys can take a couple of hours to activate. Until one is set, the app runs
+and tells you what is missing rather than failing silently.
+
+### 3. Run
+
+Build and run in the iOS Simulator or on a device. Location access is optional —
+the city search works without it.
 
 ## Acknowledgements
 
