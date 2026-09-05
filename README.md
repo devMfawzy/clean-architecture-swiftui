@@ -88,8 +88,8 @@ repositories, so each layer can be tested against mocks of the layer beneath it.
 ### 1. Clone and open
 
 ```sh
-git clone https://github.com/devMfawzy/WeatherApp.git
-cd WeatherApp
+git clone https://github.com/devMfawzy/clean-architecture-swiftui.git
+cd clean-architecture-swiftui
 open WeatherApp.xcodeproj
 ```
 
