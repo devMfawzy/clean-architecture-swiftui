@@ -45,7 +45,7 @@ WeatherApp/
 │       ├── GetCurrentLocationUseCase.swift
 │       └── ManageSearchHistoryUseCase.swift
 ├── Data/
-│   ├── RepositoryImplementation/
+│   ├── Repositories/
 │   │   ├── WeatherRepository.swift
 │   │   └── SearchHistoryRepository.swift
 │   ├── DataSources/
@@ -56,7 +56,7 @@ WeatherApp/
 │   │       └── WeatherLocalDataSource.swift
 │   ├── Services/
 │   │   └── LocationService.swift
-│   └── DataModels/
+│   └── Models/
 │       ├── WeatherResponseDTO.swift
 │       └── WeatherLocal.swift
 ├── Presentation/
@@ -75,8 +75,9 @@ WeatherApp/
 │       └── WeatherUIModel.swift
 ├── Configuration/
 │   └── Secrets.swift
-└── DependencyContainer/
-    └── DependencyContainer.swift
+├── DependencyContainer/
+│   └── DependencyContainer.swift
+└── WeatherApp.swift
 ```
 
 The `Domain` layer imports nothing but `Foundation`. `Data` implements the
@@ -124,11 +125,14 @@ xcodebuild -project WeatherApp.xcodeproj -scheme WeatherApp \
   -destination 'platform=iOS Simulator,name=iPhone 16' test
 ```
 
-19 tests, no mocking framework — each protocol has a hand-written mock in
+25 tests, no mocking framework — each protocol has a hand-written mock in
 `WeatherAppTests/Mocks/`. The suite covers the search-history use case, the
 repository, the location service, and the view model, including the two cases
 worth pinning down: a denied location permission shows the permission view rather
 than an error, and every other location failure does the opposite.
+
+One test reads the committed `Secrets.example.plist` and fails if it ever holds
+something usable as a real key.
 
 ## Acknowledgements
 
