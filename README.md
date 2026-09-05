@@ -102,7 +102,7 @@ needs a free API key. Sign up, copy your key from the API keys tab, then:
 cp Secrets.example.plist WeatherApp/Secrets.plist
 ```
 
-Open `WeatherApp/Secrets.plist` and paste the key into `WeatherAPIKey`.
+Open `WeatherApp/Secrets.plist` and replace `APIKeyHere` with your own key.
 
 `Secrets.plist` is listed in `.gitignore`, so your key stays out of version
 control. Note that a key shipped inside any mobile app can be extracted from the
