@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreLocation
 
 class WeatherViewModel: ObservableObject {
     private let getWeatherUseCase: GetWeatherUseCaseProtocol
