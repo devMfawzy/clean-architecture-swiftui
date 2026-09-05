@@ -12,6 +12,10 @@ I wrote it alongside **[Clean Architecture in SwiftUI](https://medium.com/@mo.fa
 which walks through the reasoning behind each layer and why the dependencies point
 the way they do.
 
+| Current location | City search |
+| :---: | :---: |
+| <img src="Screenshots/weather.png" width="260" alt="Weather for the current location"> | <img src="Screenshots/search.png" width="260" alt="City search with recent searches"> |
+
 ## Core Principles of Clean Architecture
 
 ### Separation of Layers
