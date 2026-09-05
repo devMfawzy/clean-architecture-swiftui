@@ -1,8 +1,16 @@
 # WeatherApp
 
-WeatherApp is a SwiftUI application that follows the principles of Clean Architecture. This architecture separates concerns into distinct layers, making the codebase more maintainable, testable, and scalable.
+A SwiftUI weather app built to show Clean Architecture working end to end: strict
+layer separation, protocol-driven dependency injection, and unit tests across the
+domain, data and presentation layers.
 
-For a detailed explanation of the implementation, you can refer to the [Clean Architecture in SwiftUI article on Medium](https://medium.com/@mo.fawzy/clean-architecture-in-swiftui-4eb33a187cdc) story.
+[![Clean Architecture in SwiftUI](https://img.shields.io/badge/Medium-Clean%20Architecture%20in%20SwiftUI-000000?logo=medium&logoColor=white)](https://medium.com/@mo.fawzy/clean-architecture-in-swiftui-4eb33a187cdc)
+![Swift 5](https://img.shields.io/badge/Swift-5-F05138?logo=swift&logoColor=white)
+![iOS 18.2+](https://img.shields.io/badge/iOS-18.2%2B-black?logo=apple&logoColor=white)
+
+I wrote it alongside **[Clean Architecture in SwiftUI](https://medium.com/@mo.fawzy/clean-architecture-in-swiftui-4eb33a187cdc)**,
+which walks through the reasoning behind each layer and why the dependencies point
+the way they do.
 
 ## Core Principles of Clean Architecture
 
@@ -33,9 +41,9 @@ WeatherApp/
 │       ├── GetCurrentLocationUseCase.swift
 │       └── ManageSearchHistoryUseCase.swift
 ├── Data/
-│   ├── Repositories/
+│   ├── RepositoryImplementation/
 │   │   ├── WeatherRepository.swift
-│   │   └── SearchHistoryRepository
+│   │   └── SearchHistoryRepository.swift
 │   ├── DataSources/
 │   │   ├── Remote/
 │   │   │   └── WeatherRemoteDataSource.swift
@@ -44,24 +52,32 @@ WeatherApp/
 │   │       └── WeatherLocalDataSource.swift
 │   ├── Services/
 │   │   └── LocationService.swift
-│   └── Models/
-│       └── WeatherResponseDTO.swift
-│       └── WeatherLocal.Swift
-└── Presentation/
-    ├── Views/
-    │   ├── WeatherView.swift
-    │   ├── WeatherContentView.swift
-    │   ├── SearchView.swift
-    │   └── Components/
-    │       ├── WeatherCardView.swift
-    │       ├── ErrorView.swift
-    │       ├── LocationPermissionInfoView.swift
-    │       └── LoadingView.swift
-    ├── ViewModels/
-    │   └── WeatherViewModel.swift
-    └── UIModels/
-        └── WeatherUIModel.swift
+│   └── DataModels/
+│       ├── WeatherResponseDTO.swift
+│       └── WeatherLocal.swift
+├── Presentation/
+│   ├── Views/
+│   │   ├── WeatherView.swift
+│   │   ├── WeatherContentView.swift
+│   │   ├── SearchView.swift
+│   │   └── Components/
+│   │       ├── WeatherCardView.swift
+│   │       ├── ErrorView.swift
+│   │       ├── LocationPermissionInfoView.swift
+│   │       └── LoadingView.swift
+│   ├── ViewModels/
+│   │   └── WeatherViewModel.swift
+│   └── UIModels/
+│       └── WeatherUIModel.swift
+├── Configuration/
+│   └── Secrets.swift
+└── DependencyContainer/
+    └── DependencyContainer.swift
 ```
+
+The `Domain` layer imports nothing but `Foundation`. `Data` implements the
+protocols it declares, and `Presentation` depends on use cases rather than
+repositories, so each layer can be tested against mocks of the layer beneath it.
 
 ## Getting Started
 
@@ -96,6 +112,19 @@ and tells you what is missing rather than failing silently.
 
 Build and run in the iOS Simulator or on a device. Location access is optional —
 the city search works without it.
+
+## Tests
+
+```sh
+xcodebuild -project WeatherApp.xcodeproj -scheme WeatherApp \
+  -destination 'platform=iOS Simulator,name=iPhone 16' test
+```
+
+19 tests, no mocking framework — each protocol has a hand-written mock in
+`WeatherAppTests/Mocks/`. The suite covers the search-history use case, the
+repository, the location service, and the view model, including the two cases
+worth pinning down: a denied location permission shows the permission view rather
+than an error, and every other location failure does the opposite.
 
 ## Acknowledgements
 
