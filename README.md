@@ -4,6 +4,7 @@ A SwiftUI weather app built to show Clean Architecture working end to end: stric
 layer separation, protocol-driven dependency injection, and unit tests across the
 domain, data and presentation layers.
 
+[![CI](https://github.com/devMfawzy/clean-architecture-swiftui/actions/workflows/ci.yml/badge.svg)](https://github.com/devMfawzy/clean-architecture-swiftui/actions/workflows/ci.yml)
 [![Clean Architecture in SwiftUI](https://img.shields.io/badge/Medium-Clean%20Architecture%20in%20SwiftUI-000000?logo=medium&logoColor=white)](https://medium.com/@mo.fawzy/clean-architecture-in-swiftui-4eb33a187cdc)
 ![Swift 5](https://img.shields.io/badge/Swift-5-F05138?logo=swift&logoColor=white)
 ![iOS 18.2+](https://img.shields.io/badge/iOS-18.2%2B-black?logo=apple&logoColor=white)
