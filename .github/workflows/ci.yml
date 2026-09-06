@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      # The simulator is looked up rather than named, so a runner image that
+      # ships a different iPhone model does not break the build.
+      - name: Build and test
+        run: |
+          SIM=$(xcrun simctl list devices available -j | python3 -c "
+          import json, sys
+          devices = json.load(sys.stdin)['devices']
+          for runtime in sorted(devices, reverse=True):
+              for device in devices[runtime]:
+                  if 'iPhone' in device['name']:
+                      print(device['udid'])
+                      raise SystemExit
+          ")
+          xcodebuild -project WeatherApp.xcodeproj -scheme WeatherApp \
+            -destination "id=$SIM" test
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Scans the working tree, not history. A key that was committed once can
+      # never be removed from history, so scanning history would fail forever
+      # and teach everyone to ignore the job. This fails only when a new secret
+      # is about to land.
+      #
+      # This job must not build anything. gitleaks scans every file on disk,
+      # including gitignored build output and vendored dependencies, which
+      # carry example keys of their own. A bare checkout is exactly the
+      # tracked tree, which is what we want scanned.
+      - name: Scan for secrets
+        env:
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz gitleaks
+          ./gitleaks dir . --redact --no-banner
