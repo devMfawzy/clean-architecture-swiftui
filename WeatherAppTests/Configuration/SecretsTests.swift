@@ -10,22 +10,22 @@ import XCTest
 
 class SecretsTests: XCTestCase {
     func testReturnsTheKeyWhenOneIsSet() {
-        // Arrange
-        let values = ["WeatherAPIKey": "0123456789abcdef0123456789abcdef"]
+        // Arrange — deliberately not key-shaped, so secret scanners don't flag it
+        let values = ["WeatherAPIKey": "test-key-not-real"]
 
         // Act
         let key = Secrets.apiKey(from: values)
 
         // Assert
-        XCTAssertEqual(key, "0123456789abcdef0123456789abcdef")
+        XCTAssertEqual(key, "test-key-not-real")
     }
 
     func testTrimsWhitespacePastedAroundTheKey() {
         // Arrange
-        let values = ["WeatherAPIKey": "  abc123\n"]
+        let values = ["WeatherAPIKey": "  test-key-not-real\n"]
 
         // Act & Assert
-        XCTAssertEqual(Secrets.apiKey(from: values), "abc123")
+        XCTAssertEqual(Secrets.apiKey(from: values), "test-key-not-real")
     }
 
     func testTreatsTheExamplePlaceholderAsUnset() {
